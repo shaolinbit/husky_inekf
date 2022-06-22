@@ -107,7 +107,7 @@ void HuskySystem::step() {
             // record 
             auto v_in = wheel_velocity_packet_->getLinearVelocity();
             if(enable_debug_logger_){
-                vel_input_outfile_ << wheel_velocity_packet_->getTime() << " " << v_in(0) << " " << v_in(1) << " " << v_in(2) << std::endl<<std::flush;
+                vel_input_outfile_ << state_.getTime() << wheel_velocity_packet_->getTime() << " " << v_in(0) << " " << v_in(1) << " " << v_in(2) << std::endl<<std::flush;
             }
         }
 
@@ -215,10 +215,10 @@ bool HuskySystem::updateNextIMU() {
     std::lock_guard<std::mutex> lock(husky_data_buffer_->imu_mutex);
     if (!husky_data_buffer_->imu_q.empty()) {
 
-        if(husky_data_buffer_->imu_q.size()>1){
-            ROS_INFO_STREAM("Filter not running in real-time!");
-            ROS_INFO_STREAM("IMU queue size: " <<  husky_data_buffer_->imu_q.size());
-        }
+        // if(husky_data_buffer_->imu_q.size()>1){
+        //     ROS_INFO_STREAM("Filter not running in real-time!");
+        //     ROS_INFO_STREAM("IMU queue size: " <<  husky_data_buffer_->imu_q.size());
+        // }
         imu_packet_ = husky_data_buffer_->imu_q.front();
         husky_data_buffer_->imu_q.pop();
         // Update Husky State

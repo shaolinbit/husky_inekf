@@ -47,7 +47,7 @@ settings:
                                                   # downwards) to initialize the filter.   
   velocity_time_threshold: 0.5        # Threshold for time difference between the received velocity message
                                       # and current time. (sec) 
-  estimator_enable_debug: false
+  estimator_enable_debug: true
 
   ########################
   # Orientation Settings #
@@ -64,15 +64,15 @@ settings:
   # Enable this the program will record the pose, velocity, and bias estimated by the filter. 
   enable_pose_logger: true
   log_pose_skip: 0    # Number of pose to be skipped while recording. Ex. Set to 100 the program will record every 100 poses.
-  inekf_pose_filename: "/home/justin/code/husky_inekf_ws/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/08/08_inekf_wheel_vel.txt"
-  inekf_vel_est_file_name: "/home/justin/code/husky_inekf_ws/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/08/08_wheel_vel_est.txt"
-  inekf_bias_est_file_name: "/home/justin/code/husky_inekf_ws/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/08/08_wheel_bias_est.txt"
+  inekf_pose_filename: "/home/xihangyu/code/husky_inekf/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/06/06_inekf_wheel_pose_covariance_update.txt"
+  inekf_vel_est_file_name: "/home/xihangyu/code/husky_inekf/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/06/06_wheel_vel_est.txt"
+  inekf_bias_est_file_name: "/home/xihangyu/code/husky_inekf/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/06/06_wheel_bias_est.txt"
 
   # Debug Logger
   # Enable this the program will record the inputed velocity and imu.
-  enable_debug_logger: true
-  inekf_vel_input_file_name: "/home/justin/code/husky_inekf_ws/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/08/08_wheel_vel_input.txt"
-  inekf_imu_file_name: "/home/justin/code/husky_inekf_ws/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/08/08_wheel_imu.txt"
+  enable_debug_logger: false
+  inekf_vel_input_file_name: "/home/xihangyu/code/husky_inekf/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/03/03_wheel_vel_input.txt"
+  inekf_imu_file_name: "/home/xihangyu/code/husky_inekf/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/03/03_wheel_imu.txt"
 
 
   ######################

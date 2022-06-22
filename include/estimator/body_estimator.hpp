@@ -34,8 +34,8 @@ class BodyEstimator {
         void initState(const ImuMeasurement<double>& imu_packet_in, 
                         const VelocityMeasurement& velocity_packet_in, HuskyState& state);
         void propagateIMU(const ImuMeasurement<double>& imu_packet_in, HuskyState& state);
-        void correctVelocity(const JointStateMeasurement& joint_state_packet_in, HuskyState& state, const Eigen::Matrix<double,3,3>& velocity_cov);
-        void correctVelocity(const VelocityMeasurement& velocity_packet_in, HuskyState& state, const Eigen::Matrix<double,3,3>& velocity_cov);
+        void correctVelocity(const JointStateMeasurement& joint_state_packet_in, HuskyState& state, Eigen::Matrix<double,3,3>& velocity_cov);
+        void correctVelocity(const VelocityMeasurement& velocity_packet_in, HuskyState& state, Eigen::Matrix<double,3,3>& velocity_cov);
         
         inekf::InEKF getFilter() const;
         inekf::RobotState getState() const;

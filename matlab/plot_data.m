@@ -2,13 +2,15 @@
 
 %%
 clear
-vel_in = load("/home/justin/code/husky_inekf_ws/catkin_ws/src/husky_inekf/data/21-15_data_yaw_update/vel_input.txt");
-bias_est = load("/home/justin/code/husky_inekf_ws/catkin_ws/src/husky_inekf/data/21-15_data_yaw_update/bias_est.txt");
-vel_est = load("/home/justin/code/husky_inekf_ws/catkin_ws/src/husky_inekf/data/21-15_data_yaw_update/vel_est.txt");
-% gt_pose = load("/home/justin/code/husky_inekf_ws/catkin_ws/src/husky_inekf/data/3floor_data/gt.txt");
-est_pose = load("/home/justin/code/husky_inekf_ws/catkin_ws/src/husky_inekf/data/21-15_data_yaw_update/husky_inekf_pose_tum_yaw_update.txt");
-t = est_pose(:,1);
-imu = load("/home/justin/code/husky_inekf_ws/catkin_ws/src/husky_inekf/data/21-15_data_yaw_update/imu.txt");
+% vel_in = load("/home/xihangyu/code/husky_inekf/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/01/01_wheel_vel_input.txt");
+% bias_est = load("/home/xihangyu/code/husky_inekf/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/01/01_wheel_bias_est.txt");
+% vel_est = load("/home/xihangyu/code/husky_inekf/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/01/01_wheel_vel_est.txt");
+gt_pose = load("/home/xihangyu/code/husky_inekf/catkin_ws/src/husky_inekf/data/2022-05-11_mair_gt/6/trial6_rock_you_center.txt");
+gt_pose_front = load("/home/xihangyu/code/husky_inekf/catkin_ws/src/husky_inekf/data/2022-05-11_mair_gt/6/trial6_rock_you_front.txt");
+est_pose = load("/home/xihangyu/code/husky_inekf/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/06/06_inekf_wheel_pose.txt");
+est_pose_covariance_update = load("/home/xihangyu/code/husky_inekf/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/06/06_inekf_wheel_pose_covariance_update.txt"); 
+% t = est_pose(:,1);
+% imu = load("/home/xihangyu/code/husky_inekf/catkin_ws/src/husky_inekf/data/2022-05-11_mair/MAir_0511_trial1_to_9_no_init_bias/01/01_wheel_imu.txt");
 
 
 
@@ -112,42 +114,42 @@ plot(imu(:,1),imu(1:end,4),'LineWidth',2);
 
 legend("\omega_x", "\omega_y","\omega_z",'FontSize',20);
 %%
-figure(7);
-th = 0.03;
-fs = 80;
-imu_filtered = imu;
-imu_filtered(:,2) = lowpass(imu(:,2),th,fs);
-imu_filtered(:,3) = lowpass(imu(:,3),th,fs);
-imu_filtered(:,4) = lowpass(imu(:,4),th,fs);
-imu_filtered(:,5) = lowpass(imu(:,5),th,fs);
-imu_filtered(:,6) = lowpass(imu(:,6),th,fs);
-imu_filtered(:,7) = lowpass(imu(:,7),th,fs);
-
-plot(imu_filtered(:,1),imu_filtered(1:end,5),'LineWidth',2);
-hold on
-plot(imu_filtered(:,1),imu_filtered(1:end,6),'LineWidth',2);
-hold on
-plot(imu_filtered(:,1),imu_filtered(1:end,7),'LineWidth',2);
-
-legend("acc_x", "acc_y","acc_z",'FontSize',20);
+% figure(7);
+% th = 0.03;
+% fs = 80;
+% imu_filtered = imu;
+% imu_filtered(:,2) = lowpass(imu(:,2),th,fs);
+% imu_filtered(:,3) = lowpass(imu(:,3),th,fs);
+% imu_filtered(:,4) = lowpass(imu(:,4),th,fs);
+% imu_filtered(:,5) = lowpass(imu(:,5),th,fs);
+% imu_filtered(:,6) = lowpass(imu(:,6),th,fs);
+% imu_filtered(:,7) = lowpass(imu(:,7),th,fs);
+% 
+% plot(imu_filtered(:,1),imu_filtered(1:end,5),'LineWidth',2);
+% hold on
+% plot(imu_filtered(:,1),imu_filtered(1:end,6),'LineWidth',2);
+% hold on
+% plot(imu_filtered(:,1),imu_filtered(1:end,7),'LineWidth',2);
+% 
+% legend("acc_x", "acc_y","acc_z",'FontSize',20);
 
 %%
-figure(8);
-
-plot(imu(:,1),imu(1:end,2),'LineWidth',2);
-hold on
-plot(imu(:,1),imu(1:end,3),'LineWidth',2);
-hold on
-plot(imu(:,1),imu(1:end,4),'LineWidth',2);
-hold on 
-plot(imu1(:,1),imu1(1:end,2),'LineWidth',2);
-hold on
-plot(imu1(:,1),imu1(1:end,3),'LineWidth',2);
-hold on
-plot(imu1(:,1),imu1(1:end,4),'LineWidth',2);
-
-
-legend("\omega_x", "\omega_y","\omega_z","\omega_{x\_origin}", "\omega_{y\_origin}","\omega_{z\_origin}",'FontSize',20);
+% figure(8);
+% 
+% plot(imu(:,1),imu(1:end,2),'LineWidth',2);
+% hold on
+% plot(imu(:,1),imu(1:end,3),'LineWidth',2);
+% hold on
+% plot(imu(:,1),imu(1:end,4),'LineWidth',2);
+% hold on 
+% plot(imu1(:,1),imu1(1:end,2),'LineWidth',2);
+% hold on
+% plot(imu1(:,1),imu1(1:end,3),'LineWidth',2);
+% hold on
+% plot(imu1(:,1),imu1(1:end,4),'LineWidth',2);
+% 
+% 
+% legend("\omega_x", "\omega_y","\omega_z","\omega_{x\_origin}", "\omega_{y\_origin}","\omega_{z\_origin}",'FontSize',20);
 
 
 %%  plot estimated velocity with input velocity
@@ -189,3 +191,19 @@ hold on
 plot(t,bias_est(:,4),'LineWidth',2);
 
 legend("\omega_x", "\omega_y","\omega_z","est\_bias_{roll}", "est\_bias_{pitch}", "est\_bias_{yaw}",'FontSize',20);
+
+%% traj
+
+figure(11)
+hold on
+plot3(gt_pose(:,2),gt_pose(:,3),gt_pose(:,4));
+% plot3(gt_pose_front(:,2),gt_pose_front(:,3),gt_pose_front(:,4));
+plot3(est_pose(:,2),est_pose(:,3),est_pose(:,4));
+plot3(est_pose_covariance_update(:, 2), est_pose_covariance_update(:, 3), est_pose_covariance_update(:, 4));
+xlabel('$x \; (m)$', 'fontsize', 20, 'Interpreter','latex')
+ylabel('$y \; (m)$', 'fontsize', 20, 'Interpreter','latex')
+zlabel('$z \; (m)$', 'fontsize', 20, 'Interpreter','latex')
+legend('MoCap Pose Center',  'InEKF Pose', 'InEKF Pose (covariance update)', 'fontsize', 20, 'Interpreter','latex');
+axis equal tight 
+grid on
+

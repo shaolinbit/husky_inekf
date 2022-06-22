@@ -1,4 +1,8 @@
 #include "estimator/body_estimator.hpp"
+#include <fstream>
+#include <cmath>
+
+using namespace std;
 
 namespace husky_inekf{
 
@@ -105,15 +109,15 @@ void BodyEstimator::propagateIMU(const ImuMeasurement<double>& imu_packet_in, Hu
 }
 
 // correctvelocity 
-void BodyEstimator::correctVelocity(const JointStateMeasurement& joint_state_packet_in, HuskyState& state, const Eigen::Matrix<double,3,3>& velocity_cov){
+void BodyEstimator::correctVelocity(const JointStateMeasurement& joint_state_packet_in, HuskyState& state, Eigen::Matrix<double,3,3>& velocity_cov){
 
     double t = joint_state_packet_in.getTime();
 
     if(std::abs(t-state.getTime())<velocity_t_thres_){
         Eigen::Vector3d measured_velocity = joint_state_packet_in.getBodyLinearVelocity();
+
         filter_.CorrectVelocity(measured_velocity, velocity_cov);
 
-        
         inekf::RobotState estimate = filter_.getState();
         Eigen::Matrix3d R = estimate.getRotation(); 
         Eigen::Vector3d p = estimate.getPosition();
@@ -134,12 +138,38 @@ void BodyEstimator::correctVelocity(const JointStateMeasurement& joint_state_pac
     }
 }
 
-void BodyEstimator::correctVelocity(const VelocityMeasurement& velocity_packet_in, HuskyState& state, const Eigen::Matrix<double,3,3>& velocity_cov){
+void BodyEstimator::correctVelocity(const VelocityMeasurement& velocity_packet_in, HuskyState& state, Eigen::Matrix<double,3,3>& velocity_cov){
 
     double t = velocity_packet_in.getTime();
 
+    if (estimator_debug_enabled_) {
+        ROS_INFO("Robot's time stam: %0.6f \n", state.getTime());
+        ROS_INFO("here");
+    }
+    
+    
     if(std::abs(t-state.getTime())<velocity_t_thres_){
         Eigen::Vector3d measured_velocity = velocity_packet_in.getLinearVelocity();
+
+        ifstream infile;
+        infile.open("/home/xihangyu/code/husky_inekf/catkin_ws/src/husky_inekf/data/inference_result/rock_you.txt");
+        if (infile.is_open()){
+            
+            ROS_INFO("here");
+            double time_stamp;
+            double w1, w2, w3, w4;
+            while (infile >> time_stamp >> w1 >> w2 >> w3 >> w4){
+                if (std::abs(time_stamp - std::abs( state.getTime() - 1652325602.574510)) < velocity_t_thres_){
+                    ROS_INFO("here");
+                    velocity_cov(1, 1) = velocity_cov(1, 1) * pow(1.2, 0.3* (w1+w2+w3+w4));
+                    velocity_cov(2, 2) = velocity_cov(2, 2) * pow(1.2, 0.3* (w1+w2+w3+w4));
+                    velocity_cov(3, 3) = velocity_cov(3, 3) * pow(1.2, 0.3* (w1+w2+w3+w4));
+                    break;
+                }
+            }
+        }
+
+
         filter_.CorrectVelocity(measured_velocity, velocity_cov);
 
         
